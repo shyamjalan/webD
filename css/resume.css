@@ -26,7 +26,7 @@
 .horizontal-list li{
 	font-size: 0.9rem;
 	font-weight: 100;
-	margin: 0px 8px 8px 0px;
+	margin: 0px 20px 20px 0px;
 	display: inline-block;
 }
 
@@ -63,13 +63,14 @@
 }
 
 .social-icons li a i{ 
-	padding: 8px;
-	font-size: 1rem;
+	margin: 10px 0 10px 0;
+	padding: 10px;
+	font-size: 1.2rem;
 	border-radius: 50%;
 }
 
 .social-icons li a i:hover{
-	box-shadow: 0px 0px 6px 4px rgba(230,196,196,0.3);
+	box-shadow: 0px 0px 6px 4px rgba(194, 194, 194, 0.3);
 }
 
 body{
@@ -94,7 +95,7 @@ body{
 	width: 100%;
 	border-radius: 50%;
 	border: solid 3px white;
-	box-shadow: 0px 0px 6px 4px rgba(230,196,196,0.3);
+	box-shadow: 4px 4px 6px 4px rgba(194, 194, 194, 0.3);
 }
 
 #about p{
@@ -209,6 +210,13 @@ section:nth-of-type(odd){
 
 /*Portfolio*/
 
+.portfolio-display{
+	width: 80%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
 .image-container{
 	padding: 0.5rem;
 	margin: 1rem;
@@ -223,4 +231,66 @@ section:nth-of-type(odd){
 	background-color: lightgrey;
 	border-radius: 1.5rem;
 	box-shadow: 4px 4px 6px 4px rgba(194, 194, 194, 0.3);
+}
+
+/*Contact*/
+
+.contact-display{
+	width: 80%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	color: white;
+}
+
+#contact{
+	background: linear-gradient(75deg, #2857a4, #403066 85%);
+}
+
+#contact .section-heading span{
+	color: white;
+}
+
+#contact-form{
+	padding: 10px 20px 10px 20px;
+	width: 30rem;
+	flex-wrap: wrap;
+	display: flex;
+	justify-content: center;
+}
+
+#contact-form input, textarea{
+	font-size: 15px;
+	color: white;
+	display: block;
+	margin: 1rem;
+	padding: 0.3rem;
+	width: 30rem;
+	background-color: transparent;
+	border: 0;
+	border-bottom: 1.5px solid white;
+}
+
+#message-btn{
+	background-color: transparent;
+	color: white;
+	margin: 1rem;
+	padding: 0.7rem;
+	border-radius: 0.2rem;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+}
+
+#get-in-touch-and-addr{
+	padding: 10px 20px 10px 20px;
+	width: 30rem;
+}
+
+.contact-subhead{
+	color: white;
+	font-weight: bold;
+}
+
+#get-in-touch-and-addr>div{
+	margin: 10px 0 10px 0;
 }
