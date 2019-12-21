@@ -1,0 +1,26 @@
+.orange{
+    background-color: #ff8989;
+}
+
+.mint{
+    background-color: #88f7ce;
+}
+
+.purple{
+    background-color: #e29df2
+}
+
+@media screen and (min-width: 600px){
+    	.responsive-div{
+    	width: 32%;
+    	height: 300px;
+    	margin: 0.4%;
+    	display: inline-block;
+	}
+}
+    
+@media screen and (max-width: 600px){
+    .responsive-div{
+    width: 100%;
+    height: 300px;
+}

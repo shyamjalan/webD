@@ -6,6 +6,7 @@
 
 #body-header{
 	height: 65vh;
+	max-height: 700px;
 	opacity: 0.8;
 	background-image: url(https://ninjasfiles.s3.amazonaws.com/asset_0000000000000020_1549743985_macbook_mouse.jpg);
 	background-size: cover;
@@ -87,7 +88,7 @@ body{
 	height: 12rem;
 	width: 12rem;
 	margin: auto;
-	margin-top: -17vh;
+	margin-top: -9%;
 }
 
 #my-image img{
@@ -208,6 +209,124 @@ section:nth-of-type(odd){
 	margin-bottom: 75px;
 }
 
+/*Timeline*/
+
+.timeline{
+	width: 75%;
+	position: relative;
+}
+
+.timeline-child{
+	color: grey;
+	font-size: 12px;
+	position: relative;
+	width: 45%;
+	height: auto;
+	margin: 8px;
+	padding: 4px;
+}
+
+.timeline-child:nth-of-type(even)
+{
+	left: 53%;
+}
+
+.designation{
+	margin-bottom: 4px;
+	font-size: 24px;
+	font-weight: bold;
+	color: #2857a4;
+	width: 75%;
+	display: inline-block;
+}
+
+.company{
+	font-size: 16px;
+	font-weight: bold;
+	color: #ec8937;
+	width: 75%;
+	display: inline-block;
+}
+
+.date-time{
+	font-size: 13px;
+	margin-bottom: 8px;
+	width: 75%;
+	display: inline-block;
+}
+
+.timeline-child:nth-of-type(odd)>div:nth-of-type(odd)
+{
+	text-align: right;
+}
+
+.timeline-child:nth-of-type(odd)>div:nth-of-type(even)
+{
+	text-align: justify;
+}
+
+.timeline-child img{
+	margin-top: 4px;
+	display: inline-block;
+	height: 60px;
+	object-fit: contain;
+	float: left;
+}
+
+.timeline-child:nth-of-type(even) img{
+	float: right;
+}
+
+.timeline-child::after{
+	position: absolute;
+	top: 28%;
+	content: '';
+	border-radius: 50%;
+	width: 0.8rem;
+	height: 0.8rem;
+	background-color: lightgrey;
+	z-index: 1;
+}
+
+.timeline-child:nth-of-type(even)::after
+{
+	left: -9%;
+}
+
+.timeline-child:nth-of-type(odd)::after
+{
+	right: -9%;
+}
+
+.divider-line{
+	position: absolute;
+  	border: 1.5px dashed #0096fa6b;
+  	height: 63%;
+  	top: 12%;
+  	left: 50%;
+  	width: 0;
+}
+
+.divider-line-2{
+	position: absolute;
+  	border: 1.5px dashed #0096fa6b;
+  	height: 65%;
+  	top: 12%;
+  	left: 50%;
+  	width: 0;
+}
+
+.sticky-icon{
+	transform: rotate(90deg);
+	position: sticky;
+	top: 4%;
+	margin-top: -12px;
+	margin-left: -2px;
+	font-size: 30px;
+	color: #2857a4;
+	z-index: 2;
+}
+
 /*Portfolio*/
 
 .portfolio-display{
@@ -218,6 +337,7 @@ section:nth-of-type(odd){
 }
 
 .image-container{
+	display: inline-block;
 	padding: 0.5rem;
 	margin: 1rem;
 	width: 250px;
@@ -279,6 +399,12 @@ section:nth-of-type(odd){
 	border-radius: 0.2rem;
 	font-weight: bold;
 	letter-spacing: 0.5px;
+}
+
+#message-btn:hover{
+	background-color: white;
+	color: grey;
+	cursor: pointer;
 }
 
 #get-in-touch-and-addr{
