@@ -267,7 +267,6 @@ section:nth-of-type(odd){
 
 .timeline-child img{
 	margin-top: 4px;
-	display: inline-block;
 	height: 60px;
 	object-fit: contain;
 	float: left;

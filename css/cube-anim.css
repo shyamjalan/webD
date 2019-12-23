@@ -1,0 +1,55 @@
+@keyframes rotateCube {
+  to {
+    transform: rotateY(360deg) rotateX(360deg) rotateZ(360deg)
+      scale3d(0.5, 0.5, 0.5);
+  }
+}
+
+.cube {
+  height: 200px;
+  width: 200px;
+  position: relative;
+  margin: 100px;
+  transform-style: preserve-3d; /* To Preserve the 3D Viewing nature (effects and styles)*/
+  perspective: 5000px; /* To denote how deep our 3D object (or screen) is*/
+  animation: rotateCube 4s ease-in-out infinite alternate;
+}
+
+.face {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  transition: 1s;
+}
+
+.one {
+  background-color: skyblue;
+  z-index: 1;
+}
+
+.two {
+  background-color: orange;
+  transform: rotateY(90deg) translateZ(-100px) translateX(100px);
+}
+
+.three {
+  background-color: gray;
+  transform: rotateY(90deg) translateZ(100px) translateX(100px);
+}
+
+.four {
+  background-color: darkolivegreen;
+  transform: translateZ(-200px);
+}
+
+.five {
+  background-color: beige;
+  transform: rotateX(90deg) translateZ(-100px) translateY(-100px);
+}
+
+.six {
+  background-color: sienna;
+  transform: rotateX(90deg) translateZ(100px) translateY(-100px);
+}
