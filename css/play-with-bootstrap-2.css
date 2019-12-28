@@ -1,0 +1,40 @@
+#head-div {
+  background: linear-gradient(
+    rgba(219, 219, 219, 1) 0%,
+    rgba(152, 152, 152, 1) 100%
+  );
+}
+
+.border {
+  border-width: 3px !important;
+}
+
+.no-border {
+  border: none !important;
+}
+
+.color-dodgerblue {
+  color: dodgerblue !important;
+}
+
+#head-div h1 {
+  font-size: 62px;
+}
+
+@media screen and (min-width: 576px) {
+  #head-div h1 {
+    font-size: 52px !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #head-div h1 {
+    font-size: 44px !important;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  #head-div h1 {
+    font-size: 36px !important;
+  }
+}
