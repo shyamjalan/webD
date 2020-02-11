@@ -1,0 +1,56 @@
+#outermost {
+  width: 50%;
+  min-width: 300px;
+  height: 350px;
+  background-color: rgb(204, 204, 204);
+  padding: 8px 6px 6px 6px;
+  margin: 6px;
+}
+
+#textbox {
+  background-color: transparent;
+  height: 20%;
+  margin-bottom: 28px;
+}
+
+#textbox input {
+  color: burlywood;
+  font-size: 2.8rem;
+  text-align: right;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.normal-button {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  background-color: white;
+  width: 23.8%;
+  height: 12%;
+}
+
+.normal-button span {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.normal-button:hover {
+  background-color: darkgray;
+}
+
+.rightmost {
+  background-color: coral;
+}
+
+.rightmost:hover {
+  background-color: brown;
+}
+
+.zero-btn {
+  width: 49.1%;
+}
