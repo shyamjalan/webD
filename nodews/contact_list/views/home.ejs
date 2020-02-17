@@ -3,8 +3,33 @@
     <title>
       <%= title %>
     </title>
+    <script
+      src="https://kit.fontawesome.com/824e042cfd.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Our CSS should be below all other styles so that we can override them -->
+    <link rel="stylesheet" href="/css/home.css" />
   </head>
   <body>
-    <h1>Rendered from EJS View!</h1>
+    <h1 id="page-heading">
+      <i class="fas fa-address-book"></i>
+      My Contacts List
+    </h1>
+    <div>
+      <ul>
+        <% for(let i of contact_list) { %>
+        <li>
+          <span id="name"><%= i.name %></span>
+          <span id="phone"><%= i.phone %></span>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+    <form action="/create-contact" method="POST">
+      <input type="text" name="name" placeholder="Name" required />
+      <input type="number" name="phone" placeholder="Phone" required />
+      <button id="add-btn" type="submit">Add</button>
+    </form>
+    <script type="text/javascript" src="/js/home.js"></script>
   </body>
 </html>
