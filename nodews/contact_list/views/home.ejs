@@ -15,12 +15,19 @@
       <i class="fas fa-address-book"></i>
       My Contacts List
     </h1>
-    <div>
+    <div id="contacts-list-container">
       <ul>
         <% for(let i of contact_list) { %>
-        <li>
-          <span id="name"><%= i.name %></span>
-          <span id="phone"><%= i.phone %></span>
+        <li class="contact">
+          <div class="details">
+            <p><%= i.name %></p>
+            <p><%= i.phone %></p>
+          </div>
+          <div class="delete-btn">
+            <a href="/delete-contact/?phone=<%= i.phone %>&name=<%= i.name %>">
+              <i class="fas fa-window-close"></i>
+            </a>
+          </div>
         </li>
         <% } %>
       </ul>

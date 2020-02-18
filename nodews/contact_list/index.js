@@ -8,7 +8,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded());
 //Accessing Static Files
-app.use(express.static('assets'))
+app.use(express.static("assets"));
 
 //MiddleWare 1
 // app.use(function(request, response, next) {
@@ -28,11 +28,11 @@ var contactList = [
     phone: "8953171545"
   },
   {
-    name: "Kishu",
+    name: "Ayushi",
     phone: "7458990334"
   },
   {
-    name: "Bata",
+    name: "Shyam",
     phone: "7007150981"
   }
 ];
@@ -45,6 +45,23 @@ app.get("/", function(request, response) {
     title: "Contacts List",
     contact_list: contactList
   });
+});
+
+//For deleting a contact
+app.get("/delete-contact", function(request, response) {
+  //Get the query from the URL
+  // console.log(request.query);
+  let phone = request.query.phone;
+  let name = request.query.name;
+  let contactIndex = contactList.findIndex(
+    contact => contact.phone == phone && contact.name == name
+  );
+  // console.log(contactIndex);
+  if (contactIndex != -1) {
+    contactList.splice(contactIndex, 1);
+  }
+  return response.redirect("back");
+  // console.log("Outta HERE!");
 });
 
 // app.get("/practice", function(request, response) {
