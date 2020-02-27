@@ -43,27 +43,42 @@ var contactList = [
 app.get("/", function(request, response) {
   // console.log(__dirname);
 
-  // response.send("<h1>It's running!!</h1>");
-  return response.render("home", {
-    title: "Contacts List",
-    contact_list: contactList
+  Contact.find({}, function(err, contacts) {
+    if (err) {
+      console.log("error in fetching contacts from db");
+      return;
+    }
+    return response.render("home", {
+      title: "Contacts List",
+      contact_list: contacts
+    });
   });
+
+  // response.send("<h1>It's running!!</h1>");
 });
 
 //For deleting a contact
 app.get("/delete-contact", function(request, response) {
   //Get the query from the URL
   // console.log(request.query);
-  let phone = request.query.phone;
-  let name = request.query.name;
-  let contactIndex = contactList.findIndex(
-    contact => contact.phone == phone && contact.name == name
-  );
+  //get the id from query in the url
+  let id = request.query.id;
+  //find the contact in the db using id and delte it
+  Contact.findByIdAndDelete(id, function(err) {
+    if (err) {
+      console.log("error in deleting an object from database");
+      return;
+    }
+    return response.redirect("back");
+  });
+  // let contactIndex = contactList.findIndex(
+  //   contact => contact.phone == phone && contact.name == name
+  // );
   // console.log(contactIndex);
-  if (contactIndex != -1) {
-    contactList.splice(contactIndex, 1);
-  }
-  return response.redirect("back");
+  // if (contactIndex != -1) {
+  //   contactList.splice(contactIndex, 1);
+  // }
+  // return response.redirect("back");
   // console.log("Outta HERE!");
 });
 
@@ -90,7 +105,7 @@ app.post("/create-contact", function(request, response) {
         console.log("error in creating a contact!");
         return;
       }
-      console.log("********", newContact, "*********");
+      console.log("********\n", newContact, "\n*********");
       return response.redirect("back");
     }
   );
