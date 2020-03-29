@@ -10,3 +10,8 @@
 #fetch-button{
     border-radius: 4px;
 }
+#courses-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
