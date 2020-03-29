@@ -1,0 +1,12 @@
+#button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: lightcyan;
+    margin-top: 15%;
+    padding: 8px;
+}
+#fetch-button{
+    border-radius: 4px;
+}
