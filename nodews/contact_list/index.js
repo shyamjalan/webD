@@ -63,7 +63,7 @@ app.get("/delete-contact", function(request, response) {
   // console.log(request.query);
   //get the id from query in the url
   let id = request.query.id;
-  //find the contact in the db using id and delte it
+  //find the contact in the db using id and delete it
   Contact.findByIdAndDelete(id, function(err) {
     if (err) {
       console.log("error in deleting an object from database");
