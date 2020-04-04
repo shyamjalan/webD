@@ -1,8 +1,12 @@
 module.exports.home = function (request, response) {
-    return response.end('<h1>Express is up for Codeial!</h1>');
+    return response.render('home', {
+        title: "Home"
+    });
 }
 
 module.exports.homeAlternate = function (request, response) {
-    return response.end('<h1>Alternate home reached!</h1>');
+    return response.render('alternate_home', {
+        title: "Alternate Home"
+    });
 }
 // module.exports.actionName = function(request,response){}
