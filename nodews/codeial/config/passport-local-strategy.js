@@ -16,7 +16,7 @@ passport.use(new LocalStrategy({
             }
             if(!user || user.password != password){
                 console.log('Invalid Username/Password');
-                return dine(null,false);
+                return done(null,false);
             }
             return done(null, user);
         });
@@ -24,7 +24,7 @@ passport.use(new LocalStrategy({
 ));
 
 //Seializing the user to decide which key is to be kept in the cookies
-passport.serializeUser(function(user, dine){
+passport.serializeUser(function(user, done){
     done(null,user.id);
 });
 
