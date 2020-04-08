@@ -8,6 +8,9 @@ module.exports.profile = function (request, response) {
 
 //Render the sign up page
 module.exports.signUp = function(request, response) {
+    if(request.isAuthenticated()){
+        return response.redirect('/users/profile');
+    }
     return response.render('user_sign_up', {
         title : 'Codeial | Sign Up'
     })
@@ -15,6 +18,9 @@ module.exports.signUp = function(request, response) {
 
 //Render the sign in page
 module.exports.signIn = function(request, response) {
+    if(request.isAuthenticated()){
+        return response.redirect('/users/profile');
+    }
     return response.render('user_sign_in', {
         title : 'Codeial | Sign In'
     })
