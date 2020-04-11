@@ -1,0 +1,26 @@
+header{
+    div{
+        display: flex;
+        justify-content: space-between;
+        background-color: dodgerblue;
+        div{
+            color: white;
+            h2{
+                font-weight: bold;
+            }
+            ul{
+                margin-top: 8px;
+                margin-bottom: 0;
+                list-style: none;
+                li{
+                    font-size: larger;
+                    padding: 4px;
+                    display: inline;
+                    a{
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+}

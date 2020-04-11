@@ -1,0 +1,31 @@
+footer div {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  background-color: gray;
+  padding: 8px 2px 8px 8px;
+}
+
+footer div div {
+  font-size: large;
+}
+
+footer div div h6 {
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+
+footer div div ul {
+  padding-left: 14px;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+footer div div ul li {
+  margin: 4px;
+  display: inline;
+}
+
+footer div div a {
+  color: white;
+}

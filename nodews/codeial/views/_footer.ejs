@@ -1,3 +1,19 @@
 <footer>
-    Page Footer
+    <div>
+        <div>
+            <h6>&copy; Shyam Jalan. All Rights Reserved</h6>
+        </div>
+        <div>
+            <% if(locals.user){ %>
+                <ul>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/users/profile">Profile</a>
+                    </li>
+                </ul>
+            <% } %> 
+        </div>
+    </div>
 </footer>

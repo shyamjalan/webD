@@ -1,0 +1,29 @@
+header div {
+  display: flex;
+  justify-content: space-between;
+  background-color: dodgerblue;
+}
+
+header div div {
+  color: white;
+}
+
+header div div h2 {
+  font-weight: bold;
+}
+
+header div div ul {
+  margin-top: 8px;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+header div div ul li {
+  font-size: larger;
+  padding: 4px;
+  display: inline;
+}
+
+header div div ul li a {
+  color: white;
+}
