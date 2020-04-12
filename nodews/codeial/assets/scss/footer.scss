@@ -1,9 +1,13 @@
 footer{
+    height: 59px;
+    width: 100vw;
+    background-color: gray;
+    position: fixed;
+    bottom: 0;
     div{
         color: white;
         display: flex;
         justify-content: space-between;
-        background-color: gray;
         padding: 8px 2px 8px 8px;
         div{
             font-size: large;
