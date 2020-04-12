@@ -53,7 +53,7 @@ module.exports.create = function(request,response){
 
 //sign in and create a session for the user
 module.exports.createSession = function(request,response){
-    return response.redirect('/users/profile');
+    return response.redirect('/');
 }
 
 module.exports.destroySession = function(request,response){
