@@ -2,3 +2,7 @@ body {
   margin: 0;
   /* text-align: center; */
 }
+
+body main {
+  padding-bottom: 59px;
+}
