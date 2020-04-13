@@ -4,16 +4,16 @@
             <h6>&copy; 2020 Shyam Jalan | All Rights Reserved</h6>
         </div>
         <div>
-            <% if(locals.user){ %>
-                <ul>
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <% if(locals.user){ %>
                     <li>
                         <a href="/users/profile">Profile</a>
                     </li>
-                </ul>
-            <% } %> 
+                <% } %> 
+            </ul>
         </div>
     </div>
 </footer>
