@@ -17,7 +17,15 @@ module.exports.home = function (request, response) {
     // });
 
     // Show all the posts along with user data from db
-    Post.find({}).populate('user').exec(function(err,posts){
+    Post.find({})
+    .populate('user')
+    .populate({
+        path: 'comments',
+        populate: {
+            path: 'user'
+        }
+    })
+    .exec(function(err,posts){
         if(err){
             console.log('Error in fetching posts!');
             return;
