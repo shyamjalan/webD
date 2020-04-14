@@ -37,6 +37,9 @@
                                 <% for (comment of post.comments) { %>
                                     <p>
                                         <%= comment.content %>
+                                        <% if(locals.user && ((locals.user.id == comment.user.id) || (locals.user.id == post.user.id))){ %>
+                                            <a href="/comments/destroy/?id=<%= comment._id %>&postUserId=<%= post.user.id %>"><i class="fas fa-times-circle"></i></a>
+                                        <% } %> 
                                         <br>
                                         <small>
                                             <%= comment.user.name %>

@@ -23,5 +23,27 @@ module.exports.create = function(request,response){
             });
         }
     });
-    
+}
+
+module.exports.destroy = function(request,response){
+    Comment.findById(request.query.id, function(err, comment){
+        if(err){
+            console.log('Error in finding the comment to delete.');
+            return;
+        }
+        let postUserId = request.query.postUserId;
+        if(comment.user == request.user.id || postUserId == request.user.id){
+            let postId = comment.post;
+            comment.remove();
+            Post.findByIdAndUpdate(postId, {$pull: {comments: request.query.id}}, function(err,post){
+                if(err){
+                    console.log('Error in finding the post on which comment is done.');
+                }
+                return response.redirect('back');
+            });
+        }
+        else{
+            return response.redirect('back');
+        }
+    });
 }
