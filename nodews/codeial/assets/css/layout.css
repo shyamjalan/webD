@@ -1,8 +1,8 @@
 body {
-  margin: 0;
   /* text-align: center; */
 }
 
 body main {
+  margin: 10px;
   padding-bottom: 59px;
 }

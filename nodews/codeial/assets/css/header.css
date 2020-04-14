@@ -1,7 +1,12 @@
+header {
+  background-color: dodgerblue;
+}
+
 header div {
+  margin-right: 10px;
+  margin-left: 10px;
   display: flex;
   justify-content: space-between;
-  background-color: dodgerblue;
 }
 
 header div div {
