@@ -1,0 +1,18 @@
+<!-- This is a partial used in _post.ejs -->
+<ul id = 'post-comments-<%= post._id %>'>
+    <!-- Here "post" is fetched from _posts.ejs -->
+    <% for (comment of post.comments) { %>
+        <li>
+            <p>
+                <%= comment.content %>
+                <% if(locals.user && ((locals.user.id == comment.user.id) || (locals.user.id == post.user.id))){ %>
+                    <a href="/comments/destroy/?id=<%= comment._id %>&postUserId=<%= post.user.id %>"><i class="fas fa-times-circle"></i></a>
+                <% } %> 
+                <br>
+                <small>
+                    <%= comment.user.name %>
+                </small>
+            </p>
+        </li>
+    <% } %>
+</ul>
