@@ -9,6 +9,17 @@ module.exports.profile = function (request, response) {
     });
 }
 
+module.exports.update = function(request, response){
+    if(request.user.id == request.params.id){
+        User.findByIdAndUpdate(request.params.id, request.body, function(err, user){
+            return response.redirect('back');
+        });
+    }
+    else{
+        return response.status(401).send('Unauthorized');
+    }
+}
+
 //Render the sign up page
 module.exports.signUp = function(request, response) {
     if(request.isAuthenticated()){

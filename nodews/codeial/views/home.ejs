@@ -1,29 +1,29 @@
-<h1>
-    <%= title %>
-</h1>
-<section id = "feed-posts">
-    <% if(locals.user){ %>
-        <h4>Posts</h4>
-        <form action="/posts/create" id = "new-post-form" method = "POST">
-            <textarea name="content" cols="30" rows="3" placeholder="What's on your mind? <%= user.name.substr(0,user.name.indexOf(' ')) %>" required></textarea>
-            <input type="submit" value="Post">
-        </form>
-    <% } %> 
+<link rel="stylesheet" href="/css/home.css">
+<div class = "row" id = 'home-container'>
+    <section class = "col-sm-9" id = "feed-posts">
+        <% if(locals.user){ %>
+            <h4>Posts</h4>
+            <form action="/posts/create" id = "new-post-form" method = "POST">
+                <textarea name="content" cols="30" rows="3" placeholder="What's on your mind? <%= user.name.substr(0,user.name.indexOf(' ')) %>" required></textarea>
+                <input type="submit" value="Post">
+            </form>
+        <% } %> 
 
-    <div id = "posts-list-container">
-        <%- include('_post'); -%>
-    </div>
-</section>
-
-<% if(locals.user){ %>
-    <section id="user-friends">
-        <h4>Friends</h4>
-        <% for(u of all_users){ %> 
-            <% if(u.id != user.id){ %>
-                <p>
-                    <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
-                </p>    
-            <% } %>
-        <% } %>
+        <div id = "posts-list-container">
+            <%- include('_post'); -%>
+        </div>
     </section>
-<% } %> 
+
+    <% if(locals.user){ %>
+        <section class = "col-sm-3" id="user-friends">
+            <h4>Friends</h4>
+            <% for(u of all_users){ %> 
+                <% if(u.id != user.id){ %>
+                    <p>
+                        <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
+                    </p>    
+                <% } %>
+            <% } %>
+        </section>
+    <% } %> 
+</div>
