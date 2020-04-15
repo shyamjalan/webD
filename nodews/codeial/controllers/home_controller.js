@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const User = require('../models/user');
 
 module.exports.home = function (request, response) {
     // console.log(request.cookies);
@@ -30,10 +31,18 @@ module.exports.home = function (request, response) {
             console.log('Error in fetching posts!');
             return;
         }
-        return response.render('home', {
-            title: "Codeial | Home",
-            posts : posts
-        });
+        User.find({}, function (err, users) {
+            if(err){
+                console.log('Error in funding all users');
+                return;
+            }
+            return response.render('home', {
+                title: "Codeial | Home",
+                posts : posts,
+                all_users : users
+            });
+        })
+        
     });
 }
 
