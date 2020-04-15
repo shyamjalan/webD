@@ -13,7 +13,7 @@
                     <%= post.user.name %>
                 </small>
             </p>
-            <div class = 'post-comments'>
+            <div id = 'post-comments'>
             <% if(locals.user){ %>
                     <form action="/comments/create" id = "new-comment-form" method = "POST">
                         <textarea name="content" cols="30" rows="1" placeholder="Add your comment..." required></textarea>
@@ -21,7 +21,7 @@
                         <input type="submit" value="Comment">
                     </form>
             <% } %> 
-                <div class = 'comments-list'>
+                <div id = 'comments-list'>
                     <%- include('_comment'); -%>
                 </div>
             </div>
