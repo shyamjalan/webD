@@ -3,24 +3,40 @@
         <title>
             <%= title %>
         </title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="/css/layout.css">
         <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/footer.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
         <script src="https://kit.fontawesome.com/824e042cfd.js" crossorigin="anonymous"></script>
         <%- style -%>
     </head>
     <body>
         <%- include('_header'); -%>
-        <% if(flash.success && flash.success.length){ %>
-            <h5>
-                <%= flash.success %>
-            </h5>    
-        <% } %>
         <main id = 'layout-main'>
             <%- body -%>
         </main>
         <%- include('_footer'); -%>
         <%- script -%>
+        <script>
+            <% if(flash.success && flash.success.length){ %>
+                new Noty({
+                    theme: 'bootstrap-v3',
+                    text: "<%=flash.success%>",
+                    type: 'success',
+                    timeout: 1500
+                }).show();
+            <% } %>
+            
+            <% if(flash.error && flash.error.length){ %>
+                new Noty({
+                    theme: 'bootstrap-v3',
+                    text: "<%=flash.success%>",
+                    type: 'error',
+                    timeout: 1500
+                }).show();
+            <% } %>
+        </script>
     </body>
 </html>
