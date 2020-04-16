@@ -1,49 +1,40 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 
-module.exports.create = function(request,response){
-    Post.findById(request.body.post, function(err, post){
-        if(err){
-            console.log('Error in finding the post to comment');
-            return;
-        }
+module.exports.create = async function(request,response){
+    try{
+        let post = await Post.findById(request.body.post);
+
         if(post){
-            Comment.create({
+            let comment = await Comment.create({
                 content: request.body.content,
                 post: request.body.post,
                 user: request.user._id
-            }, function(err, comment){
-                if(err){
-                    console.log('Error in creating a comment');
-                    return;
-                }
-                post.comments.push(comment);
-                post.save();
-                return response.redirect('back');
             });
+            post.comments.push(comment);
+            post.save();
+            return response.redirect('back');
         }
-    });
+    }
+    catch(err){
+        console.log('Error ',err);
+        return;
+    }
 }
 
-module.exports.destroy = function(request,response){
-    Comment.findById(request.query.id, function(err, comment){
-        if(err){
-            console.log('Error in finding the comment to delete.');
-            return;
-        }
+module.exports.destroy = async function(request,response){
+    try{
         let postUserId = request.query.postUserId;
+        let comment = await Comment.findById(request.query.id);
         if(comment.user == request.user.id || postUserId == request.user.id){
             let postId = comment.post;
             comment.remove();
-            Post.findByIdAndUpdate(postId, {$pull: {comments: request.query.id}}, function(err,post){
-                if(err){
-                    console.log('Error in finding the post on which comment is done.');
-                }
-                return response.redirect('back');
-            });
+            let post = await Post.findByIdAndUpdate(postId, {$pull: {comments: request.query.id}});
         }
-        else{
-            return response.redirect('back');
-        }
-    });
+        return response.redirect('back');
+    }
+    catch(err){
+        console.log('Error ',err);
+        return;
+    }
 }
