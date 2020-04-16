@@ -67,10 +67,12 @@ module.exports.create = function(request,response){
 
 //sign in and create a session for the user
 module.exports.createSession = function(request,response){
+    request.flash('success', 'Logged In Successfully');
     return response.redirect('/');
 }
 
 module.exports.destroySession = function(request,response){
     request.logout();
+    request.flash('success', 'You are Logged Out');
     return response.redirect('/');
 }
