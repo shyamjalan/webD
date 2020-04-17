@@ -77,7 +77,7 @@ module.exports.create = function(request,response){
             })
         }
         else{
-            request.flash('error', 'User with given user already exists!');
+            request.flash('error', 'User with given email already exists!');
             return response.redirect('back');
         }
     })
