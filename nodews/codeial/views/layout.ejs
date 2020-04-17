@@ -22,7 +22,7 @@
         <script>
             <% if(flash.success && flash.success.length){ %>
                 new Noty({
-                    theme: 'bootstrap-v3',
+                    theme: 'bootstrap-v4',
                     text: "<%=flash.success%>",
                     type: 'success',
                     timeout: 1500
@@ -31,8 +31,8 @@
             
             <% if(flash.error && flash.error.length){ %>
                 new Noty({
-                    theme: 'bootstrap-v3',
-                    text: "<%=flash.success%>",
+                    theme: 'bootstrap-v4',
+                    text: "<%=flash.error%>",
                     type: 'error',
                     timeout: 1500
                 }).show();
