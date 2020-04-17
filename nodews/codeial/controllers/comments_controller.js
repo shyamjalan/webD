@@ -13,12 +13,18 @@ module.exports.create = async function(request,response){
             });
             post.comments.push(comment);
             post.save();
+            request.flash('success', 'Comment Added!')
+            return response.redirect('back');
+        }
+        else{
+            request.flash('error', 'Post not found!');
             return response.redirect('back');
         }
     }
     catch(err){
+        request.flash('error', err);
         console.log('Error ',err);
-        return;
+        return response.redirect('back');
     }
 }
 
@@ -31,10 +37,12 @@ module.exports.destroy = async function(request,response){
             comment.remove();
             let post = await Post.findByIdAndUpdate(postId, {$pull: {comments: request.query.id}});
         }
+        request.flash('success', 'Comment Deleted!')
         return response.redirect('back');
     }
     catch(err){
+        request.flash('error', err);
         console.log('Error ',err);
-        return;
+        return response.redirect('back');
     }
 }

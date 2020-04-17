@@ -37,8 +37,9 @@ module.exports.home = async function (request, response) {
             all_users : users
         });
     }catch(err){
-        console.log('Error ', err);
-        return;
+        request.flash('error', err);
+        console.log('Error ',err);
+        return response.redirect('back');
     }
     
 }
