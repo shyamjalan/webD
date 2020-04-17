@@ -38,6 +38,7 @@ passport.deserializeUser(function(id, done){
             console.log('Error ',err);
             return done(err);
         }
+        user.password = undefined;
         return done(null, user);
     });
 });

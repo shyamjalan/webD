@@ -33,7 +33,7 @@ module.exports.home = async function (request, response) {
 
         return response.render('home', {
             title: "Codeial | Home",
-            posts : posts,
+            posts : posts.reverse(),
             all_users : users
         });
     }catch(err){
