@@ -5,7 +5,6 @@
             <h4>Posts</h4>
             <form id = "new-post-form">
                 <textarea name="content" cols="30" rows="3" placeholder="What's on your mind? <%= user.name.substr(0,user.name.indexOf(' ')) %>" required></textarea>
-                <input id = "user_name" type="hidden" name="user_name" value="<%= user.name %>">
                 <input type="submit" value="Post">
             </form>
         <% } %> 

@@ -9,7 +9,7 @@
                 url: '/posts/create',
                 data: newPostForm.serialize(),
                 success: function(data){
-                    let newPost = newPostDom(data.data.post);
+                    let newPost = newPostDom(data.data.post, data.data.user_name);
                     $('#posts-list-container>ul').prepend(newPost);
                 },
                 error: function(error){
@@ -20,8 +20,7 @@
     }
 
     //Method to create a post in DOM
-    let newPostDom = function(post){
-        let username = $('#user_name').val()
+    let newPostDom = function(post, username){
         return $(`<li id = 'post-${post._id}'>
         <p>
             ${post.content}
