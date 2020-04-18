@@ -1,4 +1,13 @@
 {
+    let showNoty = function(type,message){
+        new Noty({
+            theme: 'bootstrap-v4',
+            text: message,
+            type: type,
+            timeout: 1500
+        }).show();
+    }
+
     //Method to submit the form data for new post using AJAX
     let createPost = function(){
         let newPostForm = $('#new-post-form');
@@ -11,8 +20,13 @@
                 success: function(data){
                     let newPost = newPostDom(data.data.post, data.data.user_name);
                     $('#posts-list-container>ul').prepend(newPost);
+                    //It's required to call deletePost as by default it won't get called until page is reloaded
+                    deletePost($(' .delete-post-button',newPost));
+                    $('#new-post-form')[0].reset();
+                    showNoty('success','Post Published!');
                 },
                 error: function(error){
+                    showNoty('error', err);
                     console.log(error.responseText);
                 }
             });
@@ -40,6 +54,28 @@
     </li>`)
     }
 
+    //Method to delete a post from DOM
+    let deletePost = function(deleteLink){
+        $(deleteLink).click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: 'get',
+                url: $(deleteLink).prop('href'),
+                success: function(data){
+                    $(`#post-${data.data.post_id}`).remove();
+                    showNoty('success','Post and associated comments deleted!');
+                },
+                error: function(error){
+                    showNoty('error', err);
+                    console.log(error.responseText);
+                }
+            });
+        });
+    }
+
+    $('.delete-post-button').each(function(){
+        deletePost($(this));
+    });
 
     createPost();
 }

@@ -35,7 +35,14 @@ module.exports.create = async function(request,response){
         if(post.user == request.user.id){
             post.remove();
             await Comment.deleteMany({post : request.params.id});
-            request.flash('success', 'Post and associated comments deleted!')
+            if(request.xhr){
+                return response.status(200).json({
+                    data: {
+                        post_id: request.params.id
+                    },
+                    message: "Post deleted"
+                });
+            }
         } else {
             request.flash('error', 'You cannot delete this post!')
         }
