@@ -21,6 +21,7 @@ module.exports.home = async function (request, response) {
 
     try{
         let posts = await Post.find({})
+        .sort('-createdAt')
         .populate('user')
         .populate({
             path: 'comments',
@@ -33,7 +34,7 @@ module.exports.home = async function (request, response) {
 
         return response.render('home', {
             title: "Codeial | Home",
-            posts : posts.reverse(),
+            posts : posts,
             all_users : users
         });
     }catch(err){

@@ -1,5 +1,5 @@
 {
-    //Method to submit the form data for nnew post using AJAX
+    //Method to submit the form data for new post using AJAX
     let createPost = function(){
         let newPostForm = $('#new-post-form');
         newPostForm.submit(function(e){
