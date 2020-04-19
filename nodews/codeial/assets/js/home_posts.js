@@ -18,11 +18,11 @@
                 url: '/posts/create',
                 data: newPostForm.serialize(),
                 success: function(data){
-                    let newPost = newPostDom(data.data.post, data.data.user_name);
+                    let newPost = newPostDom(data.data.post);
                     $('#posts-list-container>ul').prepend(newPost);
                     //It's required to call deletePost as by default it won't get called until page is reloaded
                     deletePost($(' .delete-post-button',newPost));
-                    $('#new-post-form')[0].reset();
+                    newPostForm[0].reset();
                     createComment($(' .new-comment-form',newPost));
                     showNoty('success','Post Published!');
                 },
@@ -35,14 +35,14 @@
     }
 
     //Method to create a post in DOM
-    let newPostDom = function(post, username){
+    let newPostDom = function(post){
         return $(`<li id = 'post-${post._id}'>
         <p>
             ${post.content}
             <a class = 'delete-post-button' href="/posts/destroy/${post._id}"><i class="fas fa-times-circle"></i></a>
             <br> 
             <small>
-                ${username}
+                ${post.user.name}
             </small>
         </p>
         <div class = 'post-comments'>
@@ -53,7 +53,6 @@
             <form class = "new-comment-form">
                 <textarea name="content" cols="30" rows="1" placeholder="Add your comment..." required></textarea>
                 <input type="hidden" name="post" value="${post._id}">
-                <input type="hidden" name="post_user_id" value="${post.user}">
                 <input type="submit" value="Comment">
             </form>
         </div>
@@ -88,8 +87,9 @@
                 url: '/comments/create',
                 data: commentForm.serialize(),
                 success: function(data){
-                    let newComment = newCommentDom(data.data.comment, data.data.comment_user_name, data.data.post_user_id);
-                    $(`#post-comments-${data.data.post_id}`).append(newComment);
+                    let newComment = newCommentDom(data.data.comment);
+                    console.log(data.data.comment);
+                    $(`#post-comments-${data.data.comment.post._id}`).append(newComment);
                     commentForm[0].reset();
                     showNoty('success', 'Comment Added!');
                 },
@@ -101,14 +101,14 @@
         });
     }
 
-    let newCommentDom = function(comment, comment_user_name, post_user_id){
+    let newCommentDom = function(comment){
         return $(`<li>
         <p>
             ${comment.content}
-            <a href="/comments/destroy/?id=${comment._id}&postUserId=${post_user_id}"><i class="fas fa-times-circle"></i></a>
+            <a href="/comments/destroy/?id=${comment._id}&postUserId=${comment.post.user}"><i class="fas fa-times-circle"></i></a>
             <br>
             <small>
-                ${comment_user_name}
+                ${comment.user.name}
             </small>
         </p>
     </li>`);

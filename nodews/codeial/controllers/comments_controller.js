@@ -13,13 +13,12 @@ module.exports.create = async function(request,response){
             });
             post.comments.push(comment);
             post.save();
+            // if we want to populate just the name of the user (we'll not want to send the password in the API), this is how we do it!
+            comment = await comment.populate('user', 'name').populate('post', 'user').execPopulate();
             if(request.xhr){
                 return response.status(200).json({
                     data: {
-                        comment: comment,
-                        comment_user_name: request.user.name,
-                        post_id: request.body.post,
-                        post_user_id: request.body.post_user_id
+                        comment: comment
                     },
                     message: "Comment Created!"
                 });

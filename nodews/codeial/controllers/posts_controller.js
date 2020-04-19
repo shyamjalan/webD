@@ -10,10 +10,11 @@ module.exports.create = async function(request,response){
         });
 
         if(request.xhr){
+            // if we want to populate just the name of the user (we'll not want to send the password in the API), this is how we do it!
+            post = await post.populate('user', 'name').execPopulate();
             return response.status(200).json({
                 data: {
                     post: post,
-                    user_name: request.user.name
                 },
                 message: "Post Created!"
             });
