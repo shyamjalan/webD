@@ -13,8 +13,17 @@ module.exports.create = async function(request,response){
             });
             post.comments.push(comment);
             post.save();
-            request.flash('success', 'Comment Added!')
-            return response.redirect('back');
+            if(request.xhr){
+                return response.status(200).json({
+                    data: {
+                        comment: comment,
+                        comment_user_name: request.user.name,
+                        post_id: request.body.post,
+                        post_user_id: request.body.post_user_id
+                    },
+                    message: "Comment Created!"
+                });
+            }
         }
         else{
             request.flash('error', 'Post not found!');
