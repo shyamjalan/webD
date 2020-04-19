@@ -41,7 +41,7 @@ module.exports.create = async function(request,response){
                     data: {
                         post_id: request.params.id
                     },
-                    message: "Post deleted"
+                    message: "Post Deleted!"
                 });
             }
         } else {

@@ -2,11 +2,11 @@
 <ul id = 'post-comments-<%= post._id %>'>
     <!-- Here "post" is fetched from _posts.ejs -->
     <% for (comment of post.comments) { %>
-        <li>
+        <li id = 'comment-<%= comment._id %>'>
             <p>
                 <%= comment.content %>
                 <% if(locals.user && ((locals.user.id == comment.user.id) || (locals.user.id == post.user.id))){ %>
-                    <a href="/comments/destroy/?id=<%= comment._id %>&postUserId=<%= post.user.id %>"><i class="fas fa-times-circle"></i></a>
+                    <a class = 'delete-comment-button' href="/comments/destroy/?id=<%= comment._id %>&postUserId=<%= post.user.id %>"><i class="fas fa-times-circle"></i></a>
                 <% } %> 
                 <br>
                 <small>

@@ -44,6 +44,15 @@ module.exports.destroy = async function(request,response){
             let postId = comment.post;
             comment.remove();
             let post = await Post.findByIdAndUpdate(postId, {$pull: {comments: request.query.id}});
+            // send the comment id which was deleted back to the views
+            if (request.xhr){
+                return response.status(200).json({
+                    data: {
+                        comment_id: request.query.id
+                    },
+                    message: "Comment Deleted!"
+                });
+            }
         }
         request.flash('success', 'Comment Deleted!')
         return response.redirect('back');
