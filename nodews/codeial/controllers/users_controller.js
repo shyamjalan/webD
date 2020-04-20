@@ -14,19 +14,34 @@ module.exports.profile = function (request, response) {
     });
 }
 
-module.exports.update = function(request, response){
+module.exports.update = async function(request, response){
     if(request.user.id == request.params.id){
-        User.findByIdAndUpdate(request.params.id, request.body, function(err, user){
-            if(err){
-                request.flash('error', err)
-                console.log('Error ',err);
+        try {
+            let user = await User.findById(request.params.id);
+            //Without Multer we can't read the request body as it is multipart enctype
+            User.uploadedAvatar(request, response, function(err){
+                if(err){
+                    request.flash('*****Multer Error*****', err)
+                    console.log('*****Multer Error*****', err);
+                    return response.redirect('back');
+                }
+                // console.log(request.file);
+                user.name = request.body.name;
+                user.email = request.body.email;
+                if(request.file){
+                    //this is saving the path of the uploaded file into the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + request.file.filename;
+                }
+                user.save();
+                request.flash('success', 'User Details Updated!')
                 return response.redirect('back');
-            }
-            request.flash('success', 'User Details Updated!')
+            })
+        } catch (error) {
+            request.flash('error', error);
+            console.log('Error ',error);
             return response.redirect('back');
-        });
-    }
-    else{
+        }
+    }else{
         return response.status(401).send('Unauthorized');
     }
 }
