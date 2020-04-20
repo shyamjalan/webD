@@ -1,8 +1,5 @@
 <link rel="stylesheet" href="/css/users.css">
-<h1>
-    <%= title %>
-</h1>
-
+<img src="<%= user.avatar ? user.avatar : '/images/default-avatar.png'%>" width = '100' alt="<%= user.name %>'s Avatar" style="margin: 5px;">
 <% if(user.id == profile_user.id){ %> 
     <!-- If user matches, the show the update form -->
     <form action="/users/update/<%= user.id %>" enctype="multipart/form-data" method="post">

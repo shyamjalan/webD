@@ -66,6 +66,8 @@ app.use(customMiddleWare.setFlash);
 
 //use express router
 app.use('/', require('./routes'));
+//Make the uploads path available to the browser
+app.use('/uploads', express.static(__dirname+'/uploads'));
 
 app.listen(port, function (err) {
   if (err) {
