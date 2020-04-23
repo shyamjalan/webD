@@ -28,7 +28,7 @@ module.exports.create = async function(request,response){
 }
 
 
-    module.exports.destroy = async function(request,response){
+module.exports.destroy = async function(request,response){
     try{
         let post = await Post.findById(request.params.id);
 
