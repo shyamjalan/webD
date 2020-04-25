@@ -16,7 +16,9 @@ passport.use(new googleStartegy({
                 console.log("Error in google strategy-passport",err);
                 return;
             }
-            console.log(profileInfo);
+            // console.log(profileInfo);
+            // console.log(accessToken);
+            // console.log(refreshToken);
             if(user){
                 // If found, set this user as request.user
                 return done(null, user);
@@ -26,7 +28,7 @@ passport.use(new googleStartegy({
                 User.create({
                     name: profileInfo.displayName,
                     email: profileInfo.emails[0].value,
-                    password: crypto.randomBytes(20).toString('hex');
+                    password: crypto.randomBytes(20).toString('hex')
                 }, function(err, user){
                     if(err){
                         console.log("Error in google strategy-passport",err);
