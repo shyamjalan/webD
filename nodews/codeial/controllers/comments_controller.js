@@ -1,6 +1,7 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
-const commentsMailer = require('../mailers/comments_mailer');
+const commentEmailWorker = require('../workers/comment_email_worker');
+const queue = require('../config/kue');
 
 module.exports.create = async function(request,response){
     try{
@@ -16,7 +17,13 @@ module.exports.create = async function(request,response){
             post.save();
             // if we want to populate just the name of the user (we'll not want to send the password in the API), this is how we do it!
             comment = await comment.populate('user', ['name', 'email']).populate('post', 'user').execPopulate();
-            commentsMailer.newComment(comment);
+            let job = queue.create('emails', comment).save(function(err){
+                if(err){
+                    console.log('Error in creating queue job : ', err);
+                    return;
+                }
+                console.log('Job Enqueued! - ',job.id);
+            });
             if(request.xhr){
                 return response.status(200).json({
                     data: {
@@ -56,7 +63,7 @@ module.exports.destroy = async function(request,response){
                 });
             }
         }
-        request.flash('success', 'Comment Deleted!')
+        request.flash('error', 'Unauthorized!')
         return response.redirect('back');
     }
     catch(err){
