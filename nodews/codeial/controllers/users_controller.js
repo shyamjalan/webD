@@ -3,8 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const Token = require('../models/reset_password_token');
-const resetPassEmailWorker = require('../workers/reset_pass_email_worker');
-const queue = require('../config/kue');
+const resetPassMailer = require('../mailers/reset_pass_mailer');
 
 module.exports.profile = function (request, response) {
     User.findById(request.params.id, function(err, user){
@@ -210,13 +209,7 @@ module.exports.findUserAndReset = async function(request,response){
                 request.flash('success','Token Updated and sent to your Email ID.');
             }
             token = await token.populate('user', ['name', 'email']).execPopulate();
-            let job = queue.create('reset-emails', token).save(function(err){
-                if(err){
-                    console.log('Error in creating queue job : ', err);
-                    return;
-                }
-                console.log('Job Enqueued! - ',job.id);
-            });
+            resetPassMailer.sendTokenLink(token);
             return response.redirect('back');
         }
     } catch (error) {
