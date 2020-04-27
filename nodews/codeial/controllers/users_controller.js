@@ -1,6 +1,10 @@
 const User = require('../models/user');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+const Token = require('../models/reset_password_token');
+const resetPassEmailWorker = require('../workers/reset_pass_email_worker');
+const queue = require('../config/kue');
 
 module.exports.profile = function (request, response) {
     User.findById(request.params.id, function(err, user){
@@ -120,4 +124,104 @@ module.exports.destroySession = function(request,response){
     request.logout();
     request.flash('success', 'You are Logged Out');
     return response.redirect('/');
+}
+
+module.exports.resetPassword = async function(request, response){
+    if(request.isAuthenticated()){
+        request.flash('error', 'You are already signed in!');
+        return response.redirect('/');
+    }
+    let accessToken = request.query.accessToken;
+    if(accessToken){
+        try{
+            let token = await Token.findOne({accessToken : accessToken});
+            if(!token){
+                request.flash('error', 'Wrong or expired access token provided.');
+                return response.redirect('/users/reset-password')
+            }
+            if(!token.isValid){
+                request.flash('error', 'Access token invalid.');
+                return response.redirect('/users/reset-password')
+            }
+            return response.render('final_reset_password', {
+                title : 'Codeial | Reset Password',
+                accessToken : accessToken
+            });
+        } catch (error) {
+            request.flash('error', error);
+            console.log('Error ',error);
+            return response.redirect('back');
+        }
+    }
+    return response.render('user_reset_password', {
+        title : 'Codeial | Reset Password'
+    });
+}
+
+module.exports.findUserAndReset = async function(request,response){
+    try{
+        let accessToken = request.query.accessToken;
+        if(accessToken){
+            let token = await Token.findOne({accessToken : accessToken});
+            if(!token){
+                request.flash('error', 'Wrong or expired access token provided.');
+                return response.redirect('/users/reset-password')
+            }
+            if(!token.isValid){
+                request.flash('error', 'Access token invalid.');
+                return response.redirect('/users/reset-password')
+            }
+            if(request.body.password != request.body.confirm_password){
+                request.flash('error', 'Passwords do not match!');
+                return response.redirect('back');
+            }
+            token.populate('user', '_id').execPopulate();
+            let user = await User.findById(token.user._id);
+            user.password = request.body.password;
+            user.save();
+            token.isValid = false;
+            token.save();
+            request.flash('success', 'User Password Reset!')
+            return response.redirect('/users/sign-in');
+        }
+        let user = await User.findOne({email: request.body.email});
+        if(!user){
+            request.flash('error', 'There is no user registered with given email id.');
+            return response.redirect('back');
+        }
+        else{
+            let token = await Token.findOne({user: user.id});
+            if(!token){
+                token = await Token.create({
+                    user: user.id,
+                    accessToken: crypto.randomBytes(20).toString('hex'),
+                    isValid: true
+                });
+                request.flash('success','Token Generated and sent to your Email ID.');
+            }
+            else if(token.isValid){
+                request.flash('success','Token resent to your Email ID.');
+            }
+            else{
+                token.accessToken = crypto.randomBytes(20).toString('hex');
+                token.isValid = true;
+                token.expireAt = new Date();
+                token.save();
+                request.flash('success','Token Updated and sent to your Email ID.');
+            }
+            token = await token.populate('user', ['name', 'email']).execPopulate();
+            let job = queue.create('reset-emails', token).save(function(err){
+                if(err){
+                    console.log('Error in creating queue job : ', err);
+                    return;
+                }
+                console.log('Job Enqueued! - ',job.id);
+            });
+            return response.redirect('back');
+        }
+    } catch (error) {
+        request.flash('error', error);
+        console.log('Error ',error);
+        return response.redirect('back');
+    }
 }
