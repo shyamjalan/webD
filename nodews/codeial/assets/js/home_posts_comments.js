@@ -22,6 +22,7 @@
                     $('#posts-list-container>ul').prepend(newPost);
                     //It's required to call deletePost as by default it won't get called until page is reloaded
                     deletePost($(' .delete-post-button',newPost));
+                    toggleLike($(' .like-button', newPost));
                     newPostForm[0].reset();
                     createComment($(' .new-comment-form',newPost));
                     showNoty('success','Post Published!');
@@ -44,6 +45,10 @@
             <small>
                 ${post.user.name}
             </small>
+            <br>
+            <a class = 'like-button' num-likes = '0' href="/likes/toggle/?id=${post._id}&type=Post">
+                <i style = "margin-top: 4px;" class="far fa-thumbs-up"></i>
+            </a> 
         </p>
         <div class = 'post-comments'>
             <div class = 'comments-list'>
@@ -90,6 +95,7 @@
                     let newComment = newCommentDom(data.data.comment);
                     $(`#post-comments-${data.data.comment.post._id}`).append(newComment);
                     deleteComment($(' .delete-comment-button',newComment));
+                    toggleLike($(' .like-button',newComment));
                     commentForm[0].reset();
                     showNoty('success', 'Comment Added!');
                 },
@@ -110,6 +116,10 @@
             <small>
                 ${comment.user.name}
             </small>
+            <br>
+            <a class = 'like-button' num-likes = '0' href="/likes/toggle/?id=${comment._id}&type=Comment">
+                <i style = "margin-top: 4px;" class="far fa-thumbs-up"></i>
+            </a> 
         </p>
     </li>`);
     }
@@ -133,6 +143,41 @@
         });
     }
 
+    let toggleLike = function(likeLink){
+        $(likeLink).click(function(e){
+            e.preventDefault();
+
+            $.ajax({
+                type: 'post',
+                url: $(likeLink).prop('href'),
+                success: function(data){
+                    let likesCount = parseInt($(likeLink).attr('num-likes'));
+                    if(data.data.redirect){
+                        window.location.href = data.data.redirect;
+                    }
+                    else if(data.data.deleteLike){
+                        likesCount -= 1;
+                        $(likeLink).attr('num-likes', likesCount.toString());
+                        if(likesCount == 0){
+                            $(likeLink).html('<i style = "margin-top: 4px;" class="far fa-thumbs-up"></i>');
+                        }else{
+                            $(likeLink).html(`<i style = "margin-top: 4px;" class="far fa-thumbs-up"></i> ${likesCount} Likes`);
+                        }
+                    }
+                    else{
+                        likesCount +=1;
+                        $(likeLink).attr('num-likes', likesCount.toString());
+                        $(likeLink).html(`<i style = "margin-top: 4px;" class="far fa-thumbs-up"></i> ${likesCount} Likes`);
+                    }
+                },
+                error: function(error){
+                    showNoty('error', error.responseText);
+                    console.log(error.responseText);
+                }
+            });
+        });
+    }
+
     createPost();
 
     $('.delete-post-button').each(function(){
@@ -145,5 +190,9 @@
 
     $('.delete-comment-button').each(function(){
         deleteComment($(this));
+    });
+
+    $('.like-button').each(function(){
+        toggleLike($(this));
     });
 }

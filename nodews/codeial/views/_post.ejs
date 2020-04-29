@@ -4,7 +4,7 @@
     <% for (post of posts){ %>
         <li id = 'post-<%= post._id %>'>
             <p>
-                <%= post.content %>   
+                <%= post.content %>  
                 <% if(locals.user && locals.user.id == post.user.id){ %>
                     <a class = 'delete-post-button' href="/posts/destroy/<%= post._id %>"><i class="fas fa-times-circle"></i></a>
                 <% } %> 
@@ -12,6 +12,13 @@
                 <small>
                     <%= post.user.name %>
                 </small>
+                <br>
+                <a class = 'like-button' num-likes = "<%= post.likes.length %>" href="/likes/toggle/?id=<%= post._id %>&type=Post">
+                    <i style = "margin-top: 4px;" class="far fa-thumbs-up"></i>
+                    <% if(post.likes.length) { %>
+                        <%= post.likes.length %> Likes
+                    <% } %>
+                </a> 
             </p>
             <div class = 'post-comments'>
                 <div class = 'comments-list'>

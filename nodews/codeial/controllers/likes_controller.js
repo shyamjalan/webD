@@ -3,8 +3,16 @@ const Comment = require('../models/comment');
 const Post = require('../models/post');
 
 module.exports.toggleLike = async function(request, response){
+    if(!request.isAuthenticated()){
+        request.flash('error', 'Sign-In to like/dislike.');
+        return response.json(200, {
+            message: 'Request Completed',
+            data: {
+                redirect: '/users/sign-in'
+            }
+        });
+    }
     try {
-        //likes/toggle/?id=abcdef&type=[Post/Comment]
         let likeable;
         let deleteLike = false;
         if(request.query.type == 'Post'){

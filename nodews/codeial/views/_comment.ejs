@@ -12,6 +12,13 @@
                 <small>
                     <%= comment.user.name %>
                 </small>
+                <br>
+                <a class = 'like-button' num-likes = "<%= comment.likes.length %>" href="/likes/toggle/?id=<%= comment._id %>&type=Comment">
+                    <i style = "margin-top: 4px;" class="far fa-thumbs-up"></i>
+                    <% if(comment.likes.length) { %>
+                        <%= comment.likes.length %> Likes
+                    <% } %>
+                </a> 
             </p>
         </li>
     <% } %>
