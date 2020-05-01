@@ -1,22 +1,38 @@
 const User = require('../models/user');
+const Friendship = require('../models/friendship');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const Token = require('../models/reset_password_token');
 const resetPassMailer = require('../mailers/reset_pass_mailer');
 
-module.exports.profile = function (request, response) {
-    User.findById(request.params.id, function(err, user){
-        if(err){
-            request.flash('error', err)
-            console.log('Error ',err);
-            return response.redirect('back');
+module.exports.profile = async function (request, response) {
+    try {
+        let user = await User.findById(request.params.id);
+        let isFriend = false;
+        let from_user, to_user;
+        if(request.isAuthenticated()){
+            let friendships = await Friendship.find({_id: {$in: request.user.friendships}});
+            for(friendship of friendships){
+                if((friendship.from_user == request.user.id && friendship.to_user == request.params.id) || (friendship.to_user == request.user.id && friendship.from_user == request.params.id)){
+                    isFriend = true;
+                    from_user = friendship.from_user;
+                    to_user = friendship.to_user;
+                }
+            }
         }
         return response.render('users',{
             title: 'User Profile',
-            profile_user: user
+            profile_user: user,
+            isFriend : isFriend,
+            from_user : from_user,
+            to_user : to_user
         });
-    });
+    } catch (error) {
+        request.flash('error', error);
+        console.log('Error ',error);
+        return response.redirect('back');
+    }
 }
 
 module.exports.update = async function(request, response){
@@ -216,5 +232,81 @@ module.exports.findUserAndReset = async function(request,response){
         request.flash('error', error);
         console.log('Error ',error);
         return response.redirect('back');
+    }
+}
+
+module.exports.addFriend = async function(request, response){
+    if(!request.isAuthenticated()){
+        request.flash('error', 'Sign-In to friend/unfriend.');
+        return response.json(200, {
+            message: 'Request Completed',
+            redirect: '/users/sign-in'
+        });
+    }
+    try {
+        let from_user = await User.findById(request.user._id);
+        let to_user = await User.findById(request.query.to_user);
+        if(to_user){
+            let friendship = await Friendship.create({
+                from_user: request.user._id,
+                to_user: to_user._id
+            });
+            from_user.friendships.push(friendship);
+            from_user.save();
+            to_user.friendships.push(friendship);
+            to_user.save();
+            return response.json(200, {
+                message: 'Request Completed',
+                friendship: friendship
+            });
+        } else {
+            request.flash('error', 'User to friend/unfriend not found.');
+            return response.json(200, {
+                message: 'Request Completed',
+                redirect: '/'
+            });
+        }
+    } catch (error) {
+        console.log('Error : ', error);
+        return response.json(500, {
+            message: 'Internal Server Error'
+        });
+    }
+}
+
+module.exports.removeFriend = async function(request, response){
+    if(!request.isAuthenticated()){
+        request.flash('error', 'Sign-In to friend/unfriend.');
+        return response.json(200, {
+            message: 'Request Completed',
+            redirect: '/users/sign-in'
+        });
+    }
+    try {
+        let friendship = await Friendship.findOne({from_user: request.query.from_user, to_user: request.query.to_user});
+        if(friendship){
+            let from_user = await User.findById(request.query.from_user);
+            let to_user = await User.findById(request.query.to_user);
+            from_user.friendships.pull(friendship._id);
+            from_user.save();
+            to_user.friendships.pull(friendship._id);
+            to_user.save();
+            friendship.remove();
+            return response.json(200, {
+                message: 'Request Completed',
+                to_user : request.user.id == from_user.id ? to_user._id : from_user._id
+            });
+        } else {
+            request.flash('error', 'Friendship not found.');
+            return response.json(200, {
+                message: 'Request Completed',
+                redirect: '/'
+            });
+        }
+    } catch (error) {
+        console.log('Error : ', error);
+        return response.json(500, {
+            message: 'Internal Server Error'
+        });
     }
 }

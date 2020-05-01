@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/css/users.css">
-<img src="<%= user.avatar ? user.avatar : '/images/default-avatar.png'%>" width = '100' alt="<%= user.name %>'s Avatar" style="margin: 5px;">
-<% if(user.id == profile_user.id){ %> 
+<img src="<%= profile_user.avatar ? profile_user.avatar : '/images/default-avatar.png'%>" width = '100' alt="<%= profile_user.name %>'s Avatar" style="margin: 5px;">
+<% if(locals.user && user.id == profile_user.id){ %> 
     <!-- If user matches, the show the update form -->
     <form action="/users/update/<%= user.id %>" enctype="multipart/form-data" method="post" id = "uploadForm">
         <input type="text" name="name" placeholder="Your Name" value="<%= user.name %>" required>
@@ -11,5 +11,12 @@
 <% } else { %> 
     <p><%= profile_user.name %></p>
     <p><%= profile_user.email %></p>
+    <div id = friend-toggle-button>
+        <% if(locals.user && isFriend){ %>
+            <a class = 'remove' href="/users/friendship/remove/?from_user=<%= from_user %>&to_user=<%= to_user %>"><button>Unfriend</button></a>
+        <% } else { %>
+            <a class = 'add' href="/users/friendship/add/?to_user=<%= profile_user._id %>"><button>Add Friend</button></a>
+        <% } %>
+    </div>
 <% } %>
 <script src="/js/users.js"></script>

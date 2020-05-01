@@ -14,16 +14,40 @@
         </div>
     </section>
 
-    <% if(locals.user){ %>
-        <section class = "col-sm-3" id="user-friends">
-            <h4>Friends</h4>
-            <% for(u of all_users){ %> 
-                <% if(u.id != user.id){ %>
+    <section class = "col-sm-3" id="user-friends">
+        <% if(locals.user && friendships.length){ %>
+            <div id = 'friends'>
+                <h4>Friends</h4>
+                <% for(friendship of friendships){ %> 
+                    <% if(friendship.to_user._id.equals(user._id)) { %> 
+                        <p>
+                            <a href="/users/profile/<%= friendship.from_user._id %>"><%= friendship.from_user.name %></a>
+                        </p>
+                    <% } else { %>
+                        <p>
+                            <a href="/users/profile/<%= friendship.to_user._id %>"><%= friendship.to_user.name %></a>
+                        </p>
+                    <% } %>    
+                <% } %>
+            </div>
+        <% } %> 
+        <div id = 'users'>
+            <h4>Codeial Users</h4>
+            <% if(locals.user){ %>
+                <% for(u of all_users){ %> 
+                    <% if(u.id != user.id){ %>
+                        <p>
+                            <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
+                        </p>    
+                    <% } %>
+                <% } %>
+            <% } else { %>
+                <% for(u of all_users){ %> 
                     <p>
                         <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
-                    </p>    
+                    </p>  
                 <% } %>
             <% } %>
-        </section>
-    <% } %> 
+        </div>
+    </section>
 </div>
