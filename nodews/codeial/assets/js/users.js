@@ -56,12 +56,7 @@ function removeFriend(removeLink){
 }
 
 friendLink = $('#friend-toggle-button a');
-if(friendLink.attr('class') == 'add'){
-    addFriend(friendLink);
-}
-else{
-    removeFriend(friendLink);
-}
+friendLink.attr('class') == 'add' ? addFriend(friendLink) : removeFriend(friendLink);
 
 $("#file").change(function () {
     filePreview(this);
