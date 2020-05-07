@@ -2,3 +2,4 @@
 .DS_Store
 *.rdb
 nodews/codeial/uploads/users/avatars/*
+*.log

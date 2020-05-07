@@ -1,5 +1,6 @@
 const express = require("express");
 const env = require('./config/environment');
+const logger = require('morgan');
 const app = express();
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts');
@@ -22,18 +23,23 @@ chatServer.listen(5000);
 console.log('Chat server is listening on port 5000');
 const path = require('path');
 
-app.use(sassMiddleware({
-  src: path.join(__dirname, env.asset_path, 'scss'),
-  dest: path.join(__dirname, env.asset_path, 'css'),
-  debug: true,
-  outputStyle: 'expanded',
-  prefix: '/css' 
-}));
+if(env.name == 'development'){
+  app.use(sassMiddleware({
+    src: path.join(__dirname, env.asset_path, 'scss'),
+    dest: path.join(__dirname, env.asset_path, 'css'),
+    debug: true,
+    outputStyle: 'expanded',
+    prefix: '/css' 
+  }));
+}
+
 app.use(express.urlencoded());
 
 // app.use(cookieParser());
 
 app.use(express.static(env.asset_path))
+
+app.use(logger(env.morgan.mode, env.morgan.options));
 
 app.use(expressLayouts);
 
