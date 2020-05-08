@@ -3,3 +3,4 @@
 *.rdb
 nodews/codeial/uploads/users/avatars/*
 *.log
+nodews/codeial/public/assets/*
