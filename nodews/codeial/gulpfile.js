@@ -67,6 +67,6 @@ gulp.task('images', function(done){
     done();
 });
 
-gulp.task('build', gulp.series('clean:assets', 'scss', 'css', 'js', 'images'), function(done){
+gulp.task('build', gulp.series('clean:assets', gulp.parallel(gulp.series('scss', 'css'), 'js', 'images')), function(done){
     done(); 
 })
