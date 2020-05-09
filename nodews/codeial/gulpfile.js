@@ -18,12 +18,15 @@ gulp.task('clean:assets', function(done){
     done();
 });
 
-gulp.task('scss', function(done){
-    gulp.src('./assets/scss/**/*.scss')
-    .pipe(sass())
-    .pipe(cssnano())
-    .pipe(gulp.dest('./assets/css'))
-    done();
+gulp.task('scss', ()=> {
+    return new Promise((resolve, reject) => {
+        return gulp.src('./assets/scss/**/*.scss')
+            .pipe(sass())
+            .pipe(cssnano())
+            .pipe(gulp.dest('./assets/css'))
+            .on('end', resolve)
+            .on('error', reject);
+    });
 });
 
 gulp.task('css', function(done){
