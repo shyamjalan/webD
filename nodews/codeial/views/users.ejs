@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="/css/users.css">
-<img src="<%= profile_user.avatar ? profile_user.avatar : '/images/default-avatar.png'%>" width = '100' alt="<%= profile_user.name %>'s Avatar" style="margin: 5px;">
+<link rel="stylesheet" href="<%= assetPath('css/users.css') %>">
+<img src="<%= profile_user.avatar ? profile_user.avatar : assetPath('images/default-avatar.png') %>" width = '100' alt="<%= profile_user.name %>'s Avatar" style="margin: 5px;">
 <% if(locals.user && user.id == profile_user.id){ %> 
     <!-- If user matches, the show the update form -->
     <form action="/users/update/<%= user.id %>" enctype="multipart/form-data" method="post" id = "uploadForm">
@@ -19,4 +19,4 @@
         <% } %>
     </div>
 <% } %>
-<script src="/js/users.js"></script>
+<script src="<%= assetPath('js/users.js') %>"></script>

@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="/css/home.css">
-<link rel="stylesheet" href="/css/chat_box.css">
+<link rel="stylesheet" href="<%= assetPath('css/home.css') %>">
+<link rel="stylesheet" href="<%= assetPath('css/chat_box.css') %>">
 <div class = "row" id = 'home-container'>
     <section class = "col-sm-9" id = "feed-posts">
         <% if(locals.user){ %>
@@ -56,7 +56,7 @@
     <% } %>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-<script src="/js/chat_engine.js"></script>
+<script src="<%= assetPath('js/chat_engine.js') %>"></script>
 <% if(locals.user){ %>
     <script>
         new ChatEngine('user-chat-box', '<%= locals.user.email %>');
