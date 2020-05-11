@@ -33,6 +33,7 @@ class ChatEngine{
                     user_email: self.userEmail,
                     chatroom: 'codeial'
                 });
+                $('#chat-message-input').val('');
             }
         });
 
