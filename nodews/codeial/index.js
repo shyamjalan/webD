@@ -87,7 +87,6 @@ app.use('/uploads', express.static(__dirname+'/uploads'));
 
 app.listen(port, function (err) {
   if (err) {
-    // console.log("Error : ",err);
     console.log(`Error in running the server : ${err}`);
   }
   console.log(`Server is running on port : ${port}`);

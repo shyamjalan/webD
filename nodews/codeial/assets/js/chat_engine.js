@@ -37,7 +37,7 @@ class ChatEngine{
         });
 
         self.socket.on('receive_message', function(data){
-            console.log('message received : ', data.message);
+            // console.log('message received : ', data.message);
             let newMessage = $('<li>');
             let messageType = data.user_email == self.userEmail ? 'self-message' : 'other-message';
             newMessage.append($('<span>', {
