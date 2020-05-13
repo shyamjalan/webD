@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Hello from './components/Hello';
 import Counter from './components/Counter';
+import ListCustomers from './components/ListCustomers';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         </a>
       </header>
       <section>
+        <ListCustomers/>
         {/* Functional Component */}
         {/*}
         <Hello message="React"/>
@@ -30,8 +32,8 @@ function App() {
           Inner HTML
         </Hello> 
         */}
-        <Counter/>
-        <Counter title="Counter Title"/>
+        {/* <Counter/>
+        <Counter title="Counter Title"/> */}
       </section>
     </div>
   );
