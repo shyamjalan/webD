@@ -36,10 +36,18 @@ class Counter extends Component{
     }
 
     change = (evt) => {
+        //evt.persist() is used to persist an event i.e. prevent event pooling for this event object
         //event object (evt) contains details about the event
         const value = evt.target.value;
         this.setState({
-            count: value
+            count: value ? parseInt(value) : 0
+        });
+    }
+
+    update = () => {
+        const value = this.inputRef.value;
+        this.setState({
+            count: value ? parseInt(value) : 0
         });
     }
 
@@ -62,8 +70,13 @@ class Counter extends Component{
                 </div>
                 <div>
                     {/* If we want two way binding, we should handle the change event, otherwise the input will become read-only */}
-                    {/* This is called as Controlled Input */}
+                    {/* Controlled Input */}
                     Count: <input type="number" value={this.state.count} onChange={this.change}/>
+                </div>
+                <div>
+                    {/* ref is a custom property in react which contains a refernce to some DOM Element equivalent to Document.getElementById() */}
+                    {/* Uncontrolled Input */}
+                    Count: <input type="number" ref={(r) => {this.inputRef = r}}/>&nbsp;<button onClick={this.update}>Update</button> 
                 </div>
             </div>
         )
