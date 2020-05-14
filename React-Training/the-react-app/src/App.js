@@ -6,7 +6,7 @@ import UseMemoDemo from './components/hooks/UseMemoDemo';
 // import Hello from './components/Hello';
 // import Counter from './components/Counter';
 // import ListCustomers from './components/ListCustomers';
-// import Search from './components/hooks/Search';
+import Search from './components/hooks/Search';
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
       <section>
         <UseMemoDemo/>
         {/* <UseCallbackDemo/> */}
-        {/* <Search/> */}
+        <Search/>
         {/* <ListCustomers/> */}
         {/* Functional Component */}
         {/*}

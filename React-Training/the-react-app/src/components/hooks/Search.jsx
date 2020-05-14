@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import Axios from 'axios';
+import withBorder from "../hoc/withBorder";
 
 // const arr = useState(""); // arr -> [prop fn]
 // const text = arr[0];
@@ -88,4 +89,4 @@ const Search = (props) => {
     )
 }
 
-export default Search;
+export default withBorder(Search);
