@@ -1,9 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Hello from './components/Hello';
-import Counter from './components/Counter';
-import ListCustomers from './components/ListCustomers';
+// import UseCallbackDemo from './components/hooks/UseCallbackDemo';
+import UseMemoDemo from './components/hooks/UseMemoDemo';
+// import Hello from './components/Hello';
+// import Counter from './components/Counter';
+// import ListCustomers from './components/ListCustomers';
+// import Search from './components/hooks/Search';
 
 function App() {
   return (
@@ -23,7 +26,10 @@ function App() {
         </a>
       </header>
       <section>
-        <ListCustomers/>
+        <UseMemoDemo/>
+        {/* <UseCallbackDemo/> */}
+        {/* <Search/> */}
+        {/* <ListCustomers/> */}
         {/* Functional Component */}
         {/*}
         <Hello message="React"/>
