@@ -7,12 +7,14 @@ class ListCustomers extends Component {
 
     state = {
         data: [],
-        addMode: false
+        addMode: false,
+        selectedCustomer: null
     }
 
     constructor(props){
         super(props);
-        this.url = "https://calm-beach-18228.herokuapp.com/customers";
+        // this.url = "https://calm-beach-18228.herokuapp.com/customers";
+        this.url = "http://localhost:9000/customers"
     }
 
     //loaded
@@ -38,12 +40,19 @@ class ListCustomers extends Component {
         }
     }
 
-    add = (newCustomer) => {
-        const newData = [...this.state.data];
-        newData.push(newCustomer);
-        this.setState({
-            data: newData
-        })
+    add = async (newCustomer) => {
+        try {
+            await Axios.post(this.url, newCustomer);
+            alert("Saved...");
+            const newData = [...this.state.data];
+            newData.push(newCustomer);
+            this.setState({
+                data: newData
+            });
+        } catch (error) {
+            console.log("Error in saving : ",error);
+        }
+        
     }
 
     hideModal = () => {
@@ -66,10 +75,20 @@ class ListCustomers extends Component {
         });
     }
 
+    edit = (evt, customer) => {
+        evt.preventDefault();
+        this.setState({
+            addMode: false,
+            selectedCustomer: customer
+        })
+
+    }
+
     addNew = (evt) => {
         evt.preventDefault();
         this.setState({
-            addMode: true
+            addMode: true,
+            selectedCustomer: null
         })
     }
 
@@ -87,20 +106,25 @@ class ListCustomers extends Component {
                 <div style={{display: 'flex', flexFlow: 'row wrap', justifyContent: 'center'}}>
                     {this.state.data.map((item, index) => {
                         return (
-                            //key is an inbuilt attribute for react
+                            //key is an inbuilt attribute for react which ensures that a new instance is created when the key changes 
                             <div className="customer" key={item.id}>
                                 <p>ID : {item.id}</p>
                                 <p>Name : {item.name}</p>
                                 <p>Location : {item.location}</p>
                                 <div>
-                                    <button onClick={(e) => {this.delete(e, item.id);}}>Delete</button>
+                                    <button onClick={(e) => {this.edit(e, item);}}>Edit</button>
+                                    <button onClick={(e) => {this.delete(e, item.id);}}>Delete</button>&nbsp;
                                     {/* <a href="#" onClick={(e) => {this.delete(e, item.id);}}>Delete</a> */}
                                 </div>
                                 <br/>
                             </div>
                         );
                     })}
-                 </div>
+                </div>
+                <div>
+                    {/* key ensures that a new instance is created when the key changes */}
+                    {this.state.selectedCustomer ? <CustomerForm key={this.state.selectedCustomer.id} data={this.state.selectedCustomer}/> : null}
+                </div>
              </div>
          );
      }

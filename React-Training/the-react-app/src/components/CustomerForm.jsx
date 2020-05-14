@@ -16,7 +16,22 @@ class CustomerForm extends Component {
         super(props);
 
         this.initState = {...this.state};
+
+        if(this.props.data){
+            this.state.customer = this.props.data;
+        }
     }
+
+    // static getDerivedStateFromProps(nextProps, currentState){
+    //     if(nextProps.data.id !== currentState.customer.id){
+    //         return {
+    //             ...currentState,
+    //             customer : nextProps.data
+    //         }
+    //     } else {
+    //         return null;
+    //     }
+    // }    
 
     change = (evt) => {
         const value = evt.target.value;
@@ -51,7 +66,7 @@ class CustomerForm extends Component {
                 <fieldset>
                     <p>ID</p>
                     <div>
-                        <input name="id" type="number" value={this.state.customer.id} onChange={this.change}/>
+                        {this.props.data ? <input name="id" type="number" value={this.state.customer.id} onChange={this.change} disabled="true"/> : <input name="id" type="number" value={this.state.customer.id} onChange={this.change}/>}
                     </div>
 
                     <p>Name</p>
