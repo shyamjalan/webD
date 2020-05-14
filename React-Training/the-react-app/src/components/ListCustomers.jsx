@@ -17,6 +17,7 @@ class ListCustomers extends Component {
         super(props);
         // this.url = "https://calm-beach-18228.herokuapp.com/customers";
         this.url = "http://localhost:9000/customers"
+        console.log("[ListCustomers Constructor] : ",props);
     }
 
     //loaded
@@ -59,22 +60,28 @@ class ListCustomers extends Component {
 
     hideModal = () => {
         this.setState({
-            addMode: false
+            addMode: false,
+            selectedCustomer: null
         })
     }
 
-    delete = (evt, custId) => {
+    delete = async (evt, custId) => {
         //prevents navigation
         evt.preventDefault();
-        // state is treated as immutable
-        // So, a copy of state (data) is created
-        const updatedData = [...this.state.data];
-        const index = updatedData.findIndex(item => item.id === custId);
-        updatedData.splice(index, 1);
-
-        this.setState({
-            data: updatedData
-        });
+        try {
+            await Axios.delete(this.url+'/'+custId); 
+            // state is treated as immutable
+            // So, a copy of state (data) is created
+            const updatedData = [...this.state.data];
+            const index = updatedData.findIndex(item => item.id === custId);
+            updatedData.splice(index, 1);
+            alert("Deleted...");
+            this.setState({
+                data: updatedData
+            });
+        } catch (error) {
+            console.log("Error in deleting : ",error);            
+        }
     }
 
     edit = (evt, customer) => {
@@ -84,6 +91,27 @@ class ListCustomers extends Component {
             selectedCustomer: customer
         })
 
+    }
+
+    update = async (updatedCustomer) => {
+        try {
+            await Axios.put(this.url, updatedCustomer);
+            alert("Updated...");
+            const updatedData = [...this.state.data];
+            updatedData.some(function(obj){
+                if (obj.id === updatedCustomer.id){
+                    obj.name = updatedCustomer.name;
+                    obj.location = updatedCustomer.location;
+                    return true;
+                }
+            });
+            this.setState({
+                data: updatedData
+            });
+        } catch (error) {
+            console.log("Error in updating : ",error);
+        }
+        
     }
 
     addNew = (evt) => {
@@ -127,7 +155,7 @@ class ListCustomers extends Component {
                 </div>
                 <div>
                     {/* key ensures that a new instance is created when the key changes */}
-                    {this.state.selectedCustomer ? <CustomerForm key={this.state.selectedCustomer.id} data={this.state.selectedCustomer}/> : null}
+                    {this.state.selectedCustomer ? <CustomerForm key={this.state.selectedCustomer.id} data={this.state.selectedCustomer} onUpdate={this.update} onCancel={this.hideModal}/> : null}
                 </div>
              </div>
          );

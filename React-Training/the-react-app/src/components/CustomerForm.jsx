@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import {withRouter} from 'react-router-dom';
 
 class CustomerForm extends Component {
 
@@ -14,6 +14,7 @@ class CustomerForm extends Component {
 
     constructor(props){
         super(props);
+        console.log("[CustomerForm Constructor] : ",props);
 
         this.initState = {...this.state};
 
@@ -51,10 +52,12 @@ class CustomerForm extends Component {
         if(this.props.onSave){
             this.props.onSave(this.state.customer);
             this.setState(this.initState);
-        };
+        } else if(this.props.onUpdate){
+            this.props.onUpdate(this.state.customer);
+        }
     }
 
-    cancel = () => {
+    cancel = () => { 
         if(this.props.onCancel){
             this.props.onCancel();
         }
@@ -66,7 +69,7 @@ class CustomerForm extends Component {
                 <fieldset>
                     <p>ID</p>
                     <div>
-                        {this.props.data ? <input name="id" type="number" value={this.state.customer.id} onChange={this.change} disabled="true"/> : <input name="id" type="number" value={this.state.customer.id} onChange={this.change}/>}
+                        {this.props.data ? <input name="id" type="number" value={this.state.customer.id} onChange={this.change} disabled={true}/> : <input name="id" type="number" value={this.state.customer.id} onChange={this.change}/>}
                     </div>
 
                     <p>Name</p>
@@ -89,4 +92,4 @@ class CustomerForm extends Component {
 
 }
 
-export default CustomerForm;
+export default withRouter(CustomerForm);
