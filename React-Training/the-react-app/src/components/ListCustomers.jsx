@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Axios from 'axios';
 import './ListCustomers.css';
 import CustomerForm from './CustomerForm';
+import { Link } from 'react-router-dom';
+
 
 class ListCustomers extends Component {
 
@@ -114,6 +116,8 @@ class ListCustomers extends Component {
                                 <div>
                                     <button onClick={(e) => {this.edit(e, item);}}>Edit</button>
                                     <button onClick={(e) => {this.delete(e, item.id);}}>Delete</button>&nbsp;
+                                    <br/>
+                                    <Link to={"/customers/"+item.id}><button>Details</button></Link>
                                     {/* <a href="#" onClick={(e) => {this.delete(e, item.id);}}>Delete</a> */}
                                 </div>
                                 <br/>
