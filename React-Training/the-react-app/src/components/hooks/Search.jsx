@@ -1,12 +1,15 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import Axios from 'axios';
 import withBorder from "../hoc/withBorder";
+import {AppContext} from '../../context/AppContext'
 
 // const arr = useState(""); // arr -> [prop fn]
 // const text = arr[0];
 // const setText = arr[1];
 
 const Search = (props) => {
+
+    const appContext = useContext(AppContext);
 
     // this is like defining state inside the class but since there is no inherited function to setState, we have to declare it
     // and render is called whenever it is called
@@ -76,6 +79,10 @@ const Search = (props) => {
     return (
         <div>
             <h3>Search</h3>
+            <h4>
+                <p>AppName: {appContext.appName}</p>
+                <p>Author: {appContext.author}</p>
+            </h4>
             <h5>Search Count : {searchCount.current}</h5>
             <div>
                 <input type="search" value={text} onChange={change} ref={(r) => {searchRef = r}}/>

@@ -1,0 +1,11 @@
+{
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "workbench.iconTheme": "eq-material-theme-icons-palenight",
+    "workbench.preferredLightColorTheme": "Community Material Theme Lighter",
+    "workbench.preferredDarkColorTheme": "Community Material Theme Palenight High Contrast",
+    "workbench.colorTheme": "Community Material Theme Palenight High Contrast",
+    "workbench.preferredHighContrastColorTheme": "Community Material Theme Lighter High Contrast"
+}

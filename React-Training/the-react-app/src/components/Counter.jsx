@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {AppContext} from '../context/AppContext';
 class Counter extends Component{
 
     state = {
@@ -62,6 +62,12 @@ class Counter extends Component{
         return(
             <div>
                 <h3>{this.props.title ? this.props.title : "Counter"}</h3>
+
+                <h4>
+                    <p>AppName: {this.context.appName}</p>
+                    <p>Author: {this.context.author}</p>
+                </h4>
+
                 <p>Count : {this.state.count}</p>
                 <div>
                     <button onClick={this.inc}>Increment</button>
@@ -71,7 +77,7 @@ class Counter extends Component{
                 <div>
                     {/* If we want two way binding, we should handle the change event, otherwise the input will become read-only */}
                     {/* Controlled Input */}
-                    Count: <input type="number" value={this.state.count} onChange={this.change}/>
+                    Count: <input type="number" data-testid='cnt' value={this.state.count} onChange={this.change}/>
                 </div>
                 <div>
                     {/* ref is a custom property in react which contains a refernce to some DOM Element equivalent to Document.getElementById() */}
@@ -83,4 +89,5 @@ class Counter extends Component{
     }
 }
 
+Counter.contextType=AppContext;
 export default Counter;
