@@ -4,5 +4,6 @@
 nodews/codeial/uploads/users/avatars/*
 *.log
 nodews/codeial/public/assets/*
+nodews/codeial/assets/css/*
 React-Training/webpack-demo/node_modules/*
 React-Training/webpack-demo/dist/*
